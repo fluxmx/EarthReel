@@ -1,0 +1,30 @@
+data:
+  path: ../demo_data/ifs/20261030180000-0h-oper-fc-sfc.grib2
+  variable: sve
+  latitude: latitude
+  longitude: longitude
+  time: valid_time
+  time_index: 0
+
+display:
+  title: "Eastward surface sea water velocity"
+  layout: dual
+  interpolation: nearest
+  source: "ECMWF IFS Open Data, 0.1 degree grid, 0h forecast"
+  attribution: "Based on data and products of ECMWF · CC BY 4.0"
+  cmap: coolwarm
+  vmin: -1
+  vmax: 1
+  vcenter: 0
+
+output:
+  width: 2560
+  height: 1440
+  fps: 60
+  duration: 20
+  crf: 22
+  preset: slow
+
+camera:
+  longitude: 110
+  latitude: 30

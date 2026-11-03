@@ -1,0 +1,29 @@
+data:
+  path: ../demo_data/demo-sst-2000_01_01_00-01-02.nc
+  variable: sst
+  latitude: latitude
+  longitude: longitude
+  time: valid_time
+  time_index: 0
+
+display:
+  layout: dual
+  interpolation: nearest
+  source: "ECMWF / Copernicus Climate Change Service (C3S), via CDS"
+  attribution: "© ECMWF 2026 · Copernicus information 2026 · CC BY 4.0"
+  cmap: coolwarm
+  vmin: -2
+  vmax: 32
+  vcenter: null
+
+output:
+  width: 2560
+  height: 1440
+  fps: 60
+  duration: 20
+  crf: 22
+  preset: slow
+
+camera:
+  longitude: 110
+  latitude: 30

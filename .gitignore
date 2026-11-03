@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Local secrets and configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Scientific data and generated media
+# Data is ignored by default. Track a specific file only when explicitly requested,
+# using git add -f <path> after reviewing it.
+/data/*
+!/data/.gitkeep
+/demo_data/**
+!/demo_data/README.md
+/outputs/*
+!/outputs/.gitkeep
+*.nc
+*.nc4
+*.netcdf
+*.grib
+*.grib2
+*.grb
+*.grb2
+*.grib.bz2
+*.grib2.bz2
+*.grb.bz2
+*.grb2.bz2
+*.nc.gz
+*.nc4.gz
+*.grib.gz
+*.grib2.gz
+*.grb.gz
+*.grb2.gz
+*.h5
+*.hdf5
+*.zarr/
+*.mp4
+*.mov
+*.avi
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
