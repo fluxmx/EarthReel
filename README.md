@@ -3,74 +3,73 @@
   <img src="src/earthreel/assets/earthreel-logo.svg" alt="EarthReel" width="420">
 </picture>
 
-将大气、海洋等地球科学数据制作成具有科学标注的三维地球影像。
+**English** | [简体中文](README.zh-CN.md)
 
-项目处于早期开发阶段，已支持全球规则经纬网格温度和速度分量场的 PNG 静帧与固定时刻的旋转地球 MP4。支持通过可选 `grib` 依赖读取 GRIB1/GRIB2 温度和速度分量数据（[IFS 示例](examples/README.md#ifs-grib-气温示例)）。仓库内附带 ERA5 2 米气温数据，无需额外下载即可复现。
+Turn atmospheric, oceanic, and other Earth science data into 3D globe imagery with scientific annotations.
 
-## IFS 4K 渲染展示
+EarthReel is in early development. It currently supports PNG snapshots and rotating-globe MP4 videos at a fixed data time for temperature and velocity component fields on global regular latitude–longitude grids. GRIB1/GRIB2 temperature and velocity component data can be read with the optional `grib` dependency ([IFS example, in Chinese](examples/README.md#ifs-grib-气温示例)). ERA5 2 m temperature data is included in the repository so you can reproduce the demo without additional downloads.
 
-以下三张图均由 EarthReel 使用 ECMWF IFS 的 **0.1° 全球网格、2026-10-30 18:00 UTC 起报的 0h 数据**生成，
-输出分辨率为 **3840 × 2160**。双球展示同一时刻的两个反向视角；点击图片可查看原图。
+## IFS 4K Showcase
 
-### 2 米气温 · t2m
+All three images below were generated with EarthReel using ECMWF IFS **0.1° global grids, with a 0-hour forecast initialized at 2026-10-30 18:00 UTC**, at **3840 × 2160** resolution. The dual-globe layout shows two opposite views of the same time. Click an image to view it at full resolution.
 
-展示全球近地面气温分布，单位为 °C。色标范围为 −60～40°C，以 0°C 为冷暖色分界。
+### 2 m Temperature · t2m
 
-[![EarthReel 4K 全球 2 米气温：ECMWF IFS 0.1°，2026-10-30 18:00 UTC](docs/images/ifs-4k/ifs_t2m_0h_4k.png)](docs/images/ifs-4k/ifs_t2m_0h_4k.png)
+Global near-surface air temperature in °C. The color scale spans −60 to 40°C, with 0°C separating cool and warm colors.
 
-### 东西向表层海流 · sve
+[![EarthReel 4K global 2 m temperature: ECMWF IFS 0.1°, 2026-10-30 18:00 UTC](docs/images/ifs-4k/ifs_t2m_0h_4k.png)](docs/images/ifs-4k/ifs_t2m_0h_4k.png)
 
-红色表示向东、蓝色表示向西，颜色深浅表示分量大小；灰色为缺测区域。
+### Eastward Surface Ocean Current · sve
 
-[![EarthReel 4K 全球东西向表层海流：红色向东，蓝色向西，单位 m/s](docs/images/ifs-4k/ifs_sve_0h_4k.png)](docs/images/ifs-4k/ifs_sve_0h_4k.png)
+Red indicates eastward flow and blue indicates westward flow; color intensity represents the component magnitude. Gray indicates missing data.
 
-### 南北向表层海流 · svn
+[![EarthReel 4K global eastward surface ocean current: red eastward, blue westward, in m/s](docs/images/ifs-4k/ifs_sve_0h_4k.png)](docs/images/ifs-4k/ifs_sve_0h_4k.png)
 
-红色表示向北、蓝色表示向南。两个海流分量共用 −1～1 m/s 色标，以 0 为中心，便于对照；
-它们分别表示方向分量，并非合成流速。超出色标范围的数值使用端点颜色，原始数值保持不变。
+### Northward Surface Ocean Current · svn
 
-[![EarthReel 4K 全球南北向表层海流：红色向北，蓝色向南，单位 m/s](docs/images/ifs-4k/ifs_svn_0h_4k.png)](docs/images/ifs-4k/ifs_svn_0h_4k.png)
+Red indicates northward flow and blue indicates southward flow. Both current components share a −1 to 1 m/s color scale centered on zero for easy comparison. They represent individual directional components, not the combined current speed. Values outside the color range use the endpoint colors; the underlying values remain unchanged.
 
-数据来源：[ECMWF IFS Open Data](https://www.ecmwf.int/en/forecasts/datasets/open-data)，采用 CC BY 4.0。
-Based on data and products of ECMWF；由 EarthReel 进行单位转换（温度 K → °C）、球面映射和配色。
-三张 4K 展示图随仓库提供，本地原始数据和其他渲染输出默认忽略。
+[![EarthReel 4K global northward surface ocean current: red northward, blue southward, in m/s](docs/images/ifs-4k/ifs_svn_0h_4k.png)](docs/images/ifs-4k/ifs_svn_0h_4k.png)
 
-## 当前功能
+Data source: [ECMWF IFS Open Data](https://www.ecmwf.int/en/forecasts/datasets/open-data), licensed under CC BY 4.0.
+Based on data and products of ECMWF. EarthReel performs unit conversion (temperature K → °C), spherical mapping, and color mapping.
+The three 4K showcase images are included in the repository. Local source data and other rendering outputs are ignored by default.
 
-| 功能 | 当前支持 |
+## Current Features
+
+| Feature | Current support |
 | --- | --- |
-| 数据格式 | NetCDF（netCDF4 引擎）、未压缩 GRIB1/GRIB2（可选 `grib` 依赖） |
-| 网格 | 全球规则经纬网格，一维纬度和经度；保留输入分辨率，不降采样 |
-| 变量与单位 | 温度 K / °C（显示为 °C）、速度分量 m/s（保持原单位） |
-| 时间选择 | 单文件内选择一个时次；支持一维时间及 GRIB 单时次的标量时间 |
-| 球面显示 | 单球或两个反向视角同步环绕；经度接缝连接和极区闭合 |
-| 配色 | 可选色表、手动范围、线性或指定中心的双色归一化；超范围仅截断颜色 |
-| 格点显示 | 默认每格独立着色；可选连续插值；缺测保留并显示为灰色 |
-| 画面标注 | EarthReel logo、变量标题、UTC 时间、共享色标与单位 |
-| 输出 | PNG 静帧、H.264 MP4；默认 2560 × 1440、60 fps、20 秒，可配置 |
-| 复现记录 | 每个输出附 JSON，记录配置、数据 SHA-256、时刻、单位、处理说明和软件版本 |
-| 操作方式 | YAML 场景配置及 `snapshot` / `render` 命令，常用输出参数支持命令行覆盖 |
+| Data formats | NetCDF (netCDF4 engine), uncompressed GRIB1/GRIB2 (optional `grib` dependency) |
+| Grids | Global regular latitude–longitude grids with 1D latitude and longitude; input resolution is preserved without downsampling |
+| Variables and units | Temperature in K / °C (displayed in °C), velocity components in m/s (units preserved) |
+| Time selection | One time step from a single file; supports 1D time coordinates and scalar time for single-time GRIB data |
+| Globe display | Single globe or two opposite views orbiting in sync; connected longitude seam and closed polar regions |
+| Color mapping | Configurable colormaps and ranges; linear or two-slope normalization with a specified center; out-of-range values only clip colors |
+| Grid display | Per-cell coloring by default, with optional continuous interpolation; missing values are preserved and shown in gray |
+| Annotations | EarthReel logo, variable title, UTC time, shared colorbar, and units |
+| Output | PNG snapshots and H.264 MP4; configurable defaults of 2560 × 1440, 60 fps, and 20 seconds |
+| Reproducibility | A JSON sidecar for each output records configuration, data SHA-256, time, units, processing notes, and software versions |
+| Interface | YAML scene configuration and `snapshot` / `render` commands, with CLI overrides for common output settings |
 
-视频目前固定数据时刻，仅相机旋转。区域网格、ICON 原生三角网格、二维曲线坐标、多层选择、
-时间演变、流线/粒子、交互预览、在线下载，以及 Zarr/HDF5/CSV 专用入口尚未实现。
-压缩 GRIB 需先解压；文件包含其他变量不代表已支持其单位或绘制方式。
+Videos currently use a fixed data time while only the camera rotates. Regional grids, native ICON triangular grids, 2D curvilinear coordinates, multi-level selection, time evolution, streamlines/particles, interactive previews, online downloads, and dedicated Zarr/HDF5/CSV inputs are not yet implemented.
+Compressed GRIB files must be decompressed first. The presence of other variables in a file does not imply support for their units or visualization methods.
 
-## 已验证的示例
+## Verified Examples
 
-| 场景 | 变量 | 输入网格 | 色标范围 | 配置 |
+| Scene | Variable | Input grid | Color range | Configuration |
 | --- | --- | --- | --- | --- |
-| ERA5 2 米气温 | `t2m` | 0.25°，721 × 1440 | −60～40°C，中心 0°C | [era5_t2m.yml](examples/era5_t2m.yml) |
-| ERA5 海表温度 | `sst` | 0.25°，721 × 1440 | −2～32°C，线性 | [era5_sst.yml](examples/era5_sst.yml) |
-| IFS 2 米气温 | `t2m` | 0.1°，1801 × 3600 | −60～40°C，中心 0°C | [ifs_t2m.yml](examples/ifs_t2m.yml) |
-| IFS 东西向表层海流 | `sve` | 0.1°，1801 × 3600 | −1～1 m/s，中心 0 | [ifs_sve.yml](examples/ifs_sve.yml) |
-| IFS 南北向表层海流 | `svn` | 0.1°，1801 × 3600 | −1～1 m/s，中心 0 | [ifs_svn.yml](examples/ifs_svn.yml) |
+| ERA5 2 m temperature | `t2m` | 0.25°, 721 × 1440 | −60 to 40°C, centered at 0°C | [era5_t2m.yml](examples/era5_t2m.yml) |
+| ERA5 sea surface temperature | `sst` | 0.25°, 721 × 1440 | −2 to 32°C, linear | [era5_sst.yml](examples/era5_sst.yml) |
+| IFS 2 m temperature | `t2m` | 0.1°, 1801 × 3600 | −60 to 40°C, centered at 0°C | [ifs_t2m.yml](examples/ifs_t2m.yml) |
+| IFS eastward surface ocean current | `sve` | 0.1°, 1801 × 3600 | −1 to 1 m/s, centered at 0 | [ifs_sve.yml](examples/ifs_sve.yml) |
+| IFS northward surface ocean current | `svn` | 0.1°, 1801 × 3600 | −1 to 1 m/s, centered at 0 | [ifs_svn.yml](examples/ifs_svn.yml) |
 
-ERA5 t2m 示例已随仓库跟踪；SST 和 IFS 配置依赖本地下载的数据。
-详细命令及显示语义见 [示例说明](examples/README.md)。
+The ERA5 t2m sample is tracked in the repository. SST and IFS configurations require locally downloaded data.
+See the [example guide (in Chinese)](examples/README.md) for detailed commands and display semantics.
 
-## 开发环境
+## Development Environment
 
-支持 Python 3.11 或更高版本，开发及渲染建议使用 Python 3.13。
+Python 3.11 or later is supported. Python 3.13 is recommended for development and rendering.
 
 ```bash
 python3.13 -m venv .venv
@@ -80,30 +79,30 @@ earthreel --help
 earthreel --version
 ```
 
-也可以运行 `python -m earthreel --version`。
+You can also run `python -m earthreel --version`.
 
-使用 uv 时也可运行 `uv venv --python 3.13 .venv` 和 `uv pip install -e '.[dev]'`。MP4 编码使用 imageio-ffmpeg 提供的 FFmpeg，无需单独安装系统 FFmpeg。渲染需要可用的 OpenGL 环境；Linux 无显示环境的安装方式见 [示例说明](examples/README.md)。
+With uv, you can use `uv venv --python 3.13 .venv` and `uv pip install -e '.[dev]'`. MP4 encoding uses FFmpeg provided by imageio-ffmpeg, so a separate system FFmpeg installation is unnecessary. Rendering requires a working OpenGL environment; see the [example guide (in Chinese)](examples/README.md) for headless Linux setup.
 
-## 生成 ERA5 Demo
+## Generate the ERA5 Demo
 
-在仓库根目录、激活虚拟环境后运行：
+From the repository root, with the virtual environment activated, run:
 
 ```bash
 earthreel snapshot examples/era5_t2m.yml --output outputs/era5_t2m.png
 earthreel render examples/era5_t2m.yml --output outputs/era5_t2m.mp4
-# 单地球布局
+# Single-globe layout
 earthreel render examples/era5_t2m.yml --layout single --output outputs/era5_t2m_single.mp4
-# 双地球布局（默认）
+# Dual-globe layout (default)
 earthreel render examples/era5_t2m.yml --layout dual --output outputs/era5_t2m_dual.mp4
 ```
 
-默认使用 2000-01-01 00:00 UTC 气温，输出 2560 × 1440（1440p）静帧和 20 秒、60 fps 的环绕视频。生成时直接以 H.264 CRF 22 / slow 编码压缩，使用帧间预测；可用 `--crf` 和 `--preset` 调整。使用 `--time-index 1` 或 `--time-index 2` 选择 01:00 或 02:00 UTC；全片数据时间固定。通过 `--width 640 --height 360 --fps 6 --duration 2` 可快速预览。输出已存在时需要 `--overwrite`。
+By default, the demo uses temperature at 2000-01-01 00:00 UTC and produces a 2560 × 1440 (1440p) snapshot and a 20-second orbit video at 60 fps. Frames are encoded directly with H.264 CRF 22 / slow using inter-frame prediction; adjust these settings with `--crf` and `--preset`. Use `--time-index 1` or `--time-index 2` to select 01:00 or 02:00 UTC; the data time stays fixed throughout the video. For a quick preview, use `--width 640 --height 360 --fps 6 --duration 2`. Existing outputs require `--overwrite`.
 
-通过 `display.layout: single` / `dual` 或命令行 `--layout` 选择单球或双球布局，命令行优先。默认双球共用数据、时间和色标，初始观察中心为 110°E / 30°N 和 70°W / 30°S，观看方向严格相反并同步环绕。单球使用第一个视角，放大显示地球。两种布局均使用同一个 EarthReel 矢量字标的透明 PNG 衍生图作为视频左上角 logo。
+Choose a single- or dual-globe layout with `display.layout: single` / `dual` or the CLI option `--layout`; the CLI takes precedence. The default dual-globe layout shares data, time, and a colorbar. Its initial view centers are 110°E / 30°N and 70°W / 30°S, with exactly opposite viewing directions orbiting in sync. The single-globe layout uses the first view and displays a larger globe. Both layouts use a transparent PNG derived from the same EarthReel vector wordmark as the logo in the upper-left corner of the video.
 
-每个输出附带 `.png.json` 或 `.mp4.json` 运行记录，包含实际配置、源数据 SHA-256、数据时刻、软件版本及显示处理说明。详细配置和限制见 [示例说明](examples/README.md)。
+Each output includes a `.png.json` or `.mp4.json` run record containing the effective configuration, source data SHA-256, data time, software versions, and display processing notes. See the [example guide (in Chinese)](examples/README.md) for detailed configuration and limitations.
 
-## 检查
+## Checks
 
 ```bash
 ruff check .
@@ -111,31 +110,31 @@ pytest -m 'not render'
 EARTHREEL_RENDER_TESTS=1 pytest -m render
 ```
 
-CI 在 Python 3.11 / 3.13 检查安装、数据和配置，并在 Python 3.13 的 Linux 软件渲染环境检查 PNG、短 MP4 和真实 ERA5 示例。
+CI checks installation, data, and configuration on Python 3.11 / 3.13. It also checks PNG output, short MP4 videos, and the real ERA5 example in a Linux software-rendering environment on Python 3.13.
 
-## 技术方向
+## Technical Direction
 
-采用 Python 技术栈：xarray 负责数据准备，PyVista/VTK 负责场景渲染，最终生成 PNG 和 MP4。复杂网格适配可在后续按需引入 GeoVista。
+EarthReel uses a Python stack: xarray for data preparation and PyVista/VTK for scene rendering, producing PNG and MP4 outputs. GeoVista may be introduced as needed to support complex grids.
 
-当前保留输入网格分辨率，已验证 ERA5 0.25° 和 IFS 0.1°；温度 K 转 °C、速度保留 m/s；科学数据层关闭光照，固定色标、变量长名称和时间。数据来源及授权保存在文档、配置和运行记录中。后续再加入时间演变、交互预览和复杂网格。
+Input grid resolution is currently preserved, with ERA5 0.25° and IFS 0.1° verified. Temperature is converted from K to °C, while velocity stays in m/s. Lighting is disabled for the scientific data layer, with a fixed color scale, variable long name, and time. Data sources and licensing are recorded in documentation, configurations, and run records. Time evolution, interactive previews, and complex grids are planned for later.
 
-## 仓库结构
+## Repository Structure
 
 ```text
-src/earthreel/    Python 包及命令行入口
-docs/            架构与开发规划
-examples/        ERA5 / IFS 场景配置与复现说明
-demo_data/       ERA5 示例、本地下载数据及数据许可说明
-data/            本地数据（默认忽略）
-outputs/         渲染产物（默认忽略）
+src/earthreel/    Python package and CLI entry point
+docs/            Architecture and development plans
+examples/        ERA5 / IFS scene configurations and reproduction guides
+demo_data/       ERA5 sample, locally downloaded data, and data licensing notes
+data/            Local data (ignored by default)
+outputs/         Rendered outputs (ignored by default)
 ```
 
-模块边界与后续计划见 [架构说明](docs/architecture.md)。仓库包含 ERA5 t2m 示例与三张 IFS 4K 展示图；其他本地数据、凭据和生成的视频默认不纳入版本控制。
+See the [architecture guide (in Chinese)](docs/architecture.md) for module boundaries and future plans. The repository includes the ERA5 t2m sample and three IFS 4K showcase images. Other local data, credentials, and generated videos are excluded from version control by default.
 
-## 许可
+## License
 
-EarthReel 代码采用 [Apache License 2.0](LICENSE)，版权声明见 [NOTICE](NOTICE)。
+EarthReel code is licensed under the [Apache License 2.0](LICENSE). See [NOTICE](NOTICE) for copyright notices.
 
-第三方数据、地球纹理及示例素材遵循各自的授权条款；本项目许可证不替代这些授权。
+Third-party data, Earth textures, and sample assets are subject to their respective license terms; the project license does not replace them.
 
-随包分发的 NASA Blue Marble 海陆底图及 Noto Sans 字体的来源和许可见 [素材说明](src/earthreel/assets/README.md)。字体采用 SIL OFL 1.1，允许商用；所有当前画面文字使用同一字体文件。
+See the [asset guide (in Chinese)](src/earthreel/assets/README.md) for the sources and licenses of the bundled NASA Blue Marble land/ocean basemap and Noto Sans font. The font uses SIL OFL 1.1, which permits commercial use. All current on-screen text uses the same font file.
